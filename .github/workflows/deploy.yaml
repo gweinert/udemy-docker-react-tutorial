@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v2
     
     - run: docker build -t gweinert/udemy-docker-react-tutorial -f Dockerfile.dev .
-    - run: docker run -e CI=true gweinert/react-test npm test
+    - run: docker run -e CI=true gweinert/udemy-docker-react-tutorial npm test
 
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
