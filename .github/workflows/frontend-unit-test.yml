@@ -1,0 +1,13 @@
+name: Test Frontend
+
+on: [push]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build dockerfile
+      run: docker build -t gweinert/udemy-docker-react-tutorial -f Dockerfile.dev .
+    - name: Run tests
+      run: docker run -e CI=true gweinert/udemy-docker-react-tutorial npm test
