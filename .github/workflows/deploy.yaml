@@ -2,20 +2,23 @@ name: Deploy Frontend
 on:
   push:
     branches:
-      - master
+    - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: docker build -t gweinert/udemy-docker-react-tutorial -f Dockerfile.dev .
-      - run: docker run -e CI=true gweinert/react-test npm test
+    
+    - name: Checkout source code
+      uses: actions/checkout@v2
+    
+    - run: docker build -t gweinert/udemy-docker-react-tutorial -f Dockerfile.dev .
+    - run: docker run -e CI=true gweinert/react-test npm test
 
-      - name: Generate deployment package
+    - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
 
-      - name: Deploy to EB
+    - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v18
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
